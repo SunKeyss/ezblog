@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div>
+    <div class="bg_div_login">
+        <p>欢迎登陆</p>
+        <hr class="hr_login">
+        <div id="login" class="">
+            <!--<form id="loginform" name="loginform" action="/login/login" menthod="post">-->
+            <div id="login_template">
+                <div id="div_username">
+                    <span>用户名:</span>
+                    <input type="text" id="username" name="username" placeholder="手机号\邮箱\昵称"/></div>
+                <br/>
+                <div id="div_password">
+                    <span>密&nbsp;&nbsp;码:</span>
+                    <input type="password" id="password" name="password" placeholder="请输入密码"/></div>
+            </div>
+            <div id="login_click">
+                <a id="btlogin" href="#">登 录</a>
+            </div>
+            <div id="register_click">
+                <a id="btregister" href="#">注册</a>
+            </div>
+            <!--
+                            <input type="hidden" value="login" id="login_button_click"/>
+                            <input type="hidden" value="register"/>-->
+            <!--   </form>-->
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+
+    $('#btlogin').click(function () {
+        var username = $('#username').val();
+        var password = $('#password').val();
+        if(username == '' || username == 'undefined'){
+            alert("请填写用户名！");
+            return;
+        }
+        if(password == '' || password == 'undefined'){
+            alert("请填写密码！");
+            return;
+        }
+
+        $.ajax({
+            type:"post",
+            url:"login/login",
+            data:{
+                "username": username,
+                "password": password
+            },
+            dataType:"json",
+            success:function(msg){
+                if(msg.type==1){
+                    alert(msg.message);
+                    window.parent.location = 'mess/showmessages';
+
+                }else{
+                    alert(msg.message);
+
+                }
+            },
+            error:function(){
+                alert("请求异常");
+            }
+        });
+    });
+    /*    function turn_tosubmit() {
+            var username = $('#username').val();
+            document.getElementById("loginform").submit(); // js写法
+            $("#loginform").submit(); // jquery写法
+            alert("username");
+        }*/
+
+
+</script>
+{% endblock %}

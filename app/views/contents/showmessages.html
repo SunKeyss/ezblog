@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>
+    ul{
+        height: 100px;
+        width:100%;
+        list-style-type: none; //取消无序列表的固定样式
+    }
+    ul li{
+        float:left;
+        margin: 20px;  //设置三个元素的外间距
+    }
+</style>
+
+<div class="comment_title">
+    <div style="float: left;padding: 20px;">
+
+        当前登录：
+        {{messdatas[0]['mess_author']}}
+        ||&nbsp;&nbsp;共有：
+        {{messdatas|length}}
+        条）
+
+    </div>
+    <div style="float: right;padding-right: 80px;">
+        <ul>
+            <li><a href="index/index">首页</a></li>
+            <li><a href="">发布记事</a></li>
+            <li><a href="mess/showmessages">我的记事</a></li>
+        </ul>
+
+    </div>
+</div>
+<div class="comment_main">
+    <div id="PLmain" style="padding: 100px;">
+        <div id="showmessage_left">
+            <img src="\icetrack\app\views\pics\boy01.png">
+        </div>
+        <div id="showmessage_right">
+            {% for m in messdatas %}
+            <div>
+                <dl id="{{m.id}}">
+                    <dd>
+                        <p>
+							<span class="{{m.time}}">
+                                {{m.time}}
+							</span>
+                            <!--  <span class="c_jb"><a href="#">举报</a></span> -->
+                        </p>
+                        <p class="{{m.mess_title}}">
+                            {{m.mess_title}}
+                        </p>
+                        <p class="comment_share">
+                            <a href="getOneMessdetails/mess_id/{{m.id }}" title="{{m.id }}">编辑</a>
+                            <a href="javascript:void(0);" title="${m.id }" onclick="adelet({{m.id }})">删除</a>
+                        </p>
+                    </dd>
+                </dl>
+                <hr>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    function adelet(mess_id) {
+        var r = confirm("确认删除吗");
+
+        if (r == true) {
+            $.ajax({
+                type:"get",
+                url:"deleteMessage",
+                data:{
+                    "mess_id": mess_id,
+                },
+                dataType:"json",
+                success:function(msg){
+                    if(msg.type==1){
+                        alert(msg.message);
+                        window.parent.location = 'showmessages';
+                    }else{
+                        alert(msg.message);
+                    }
+                },
+                error:function(){
+                    alert("请求异常");
+                }
+            });
+        } else {
+            return;
+        }
+    }
+</script>
+
+{% endblock %}

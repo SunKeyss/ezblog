@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content %}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<style>
+    ul{
+        height: 100px;
+        width:100%;
+        list-style-type: none; //取消无序列表的固定样式
+    }
+    ul li{
+        float:left;
+        margin: 20px;  //设置三个元素的外间距
+    }
+</style>
+<div class="comment_title">
+    <div style="float: right;padding-right: 80px;">
+        <ul>
+            <li><a href="../../../index/index">首页</a></li>
+            <li><a href="">发布记事</a></li>
+            <li><a href="../../../mess/showmessages">我的记事</a></li>
+        </ul>
+
+    </div>
+</div>
+<div style="padding-top: 150px;">
+    <form action="../../updateMessage" method="get" class="basic-grey">
+        <h1>
+            <span>记录每一天</span></h1>
+        <label>
+            <span>标题</span>
+            <input id="mess_title" type="text" name="mess_title" value="{{onemessage.mess_title}}"/></label>
+        <label>
+
+            <span>内容 :</span>
+            <textarea id="mess_contents" name="mess_contents" placeholder="输入事件">{{onemessage.mess_contents}}</textarea></label>
+<!--        <label>
+            <span>设置阅读权限 :</span>
+            <select name="selection" value="点击选择">
+                <option value="private">仅自己</option>
+                <option value="public" selected=‘true’>公开</option>
+            </select>
+        </label>-->
+        <input id="mess_id" type="hidden" name = "mess_id" value="{{onemessage.id}}"/>
+        <label>
+            <span>发送</span>
+            <input type="submit" class="button" value="确认提交"/></label>
+    </form>
+</div>
+
+
+{% endblock %}
